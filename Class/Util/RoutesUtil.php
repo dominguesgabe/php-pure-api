@@ -16,7 +16,6 @@ class RoutesUtil
         $request['id'] = $urls[2] ?? null;
         $request['method'] = $_SERVER['REQUEST_METHOD'];
 
-        var_dump($request);
         return $request;
     }
 

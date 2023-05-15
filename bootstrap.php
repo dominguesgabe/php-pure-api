@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR);
 
-const HOST = 'localhost';
-const DATABASE = 'api';
+const HOST = '127.0.0.1:3307';
+const DATABASE = 'php_api';
 const USER = 'root';
 const PASSWORD = '123';
 const DS = DIRECTORY_SEPARATOR;

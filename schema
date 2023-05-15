@@ -1,0 +1,11 @@
+create table authorized_tokens(
+    id int primary key auto_increment not null,
+    token varchar(150) not null,
+    status enum('Y', "N") not null default "N"
+)
+
+create table users(
+    id int primary key not null,
+    login varchar(100) not null unique,
+    password varchar(100) not null
+)
