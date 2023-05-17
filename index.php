@@ -1,5 +1,6 @@
 <?php
 
+use Util\GenericConstsUtil;
 use Util\RoutesUtil;
 use Validator\RequestValidator;
 
@@ -14,6 +15,9 @@ try {
 
 } catch (Exception $e) {
 
-    echo $e->getMessage();
+    echo json_encode([
+        GenericConstsUtil::TYPE => GenericConstsUtil::TYPE_ERROR,
+        GenericConstsUtil::ANSWER => utf8_encode($e->getMessage())
+    ]);
 
 }

@@ -1,7 +1,4 @@
 {
-    "require-dev": {
-        "kint-php/kint": "^5.0"
-    },
     "require": {
         "ext-pdo": "*"
     }

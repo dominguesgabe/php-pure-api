@@ -19,6 +19,7 @@ abstract class GenericConstsUtil
     public const MSG_ERROR_NOT_AFFECTED = 'No record affected.';
     public const MSG_ERROR_EMPTY_TOKEN = 'Authentication token required.';
     public const MSG_ERROR_EMPTY_JSON = 'Requisition body can not be empty.';
+    public const MSG_ERROR_UNAUTHORIZED_TOKEN = 'Unauthorized token.';
 
 //    SUCCESS
     public const MSG_SUCCESS_DELETED = 'Successfully deleted.';
