@@ -19,22 +19,21 @@ class AuthorizedTokensRepository
     {
         $treatedToken = str_replace([' ', 'Bearer'], '', $token);
 
-        if ($treatedToken) {
-            $query = 'SELECT id FROM ' . self::TABLE . ' WHERE token = :token AND status = :status';
-
-            $statement = $this->getMySQL()->getDb()->prepare($query);
-            $statement->bindValue(':token', $treatedToken);
-            $statement->bindValue(':status', GenericConstsUtil::YES);
-
-            $statement->execute();
-
-            if ($statement->rowCount() !== 1) {
-                header('HTTP/1.1 401 Unauthorized');
-                throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_UNAUTHORIZED_TOKEN);
-            }
-
-        } else {
+        if (!$treatedToken) {
             throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_EMPTY_TOKEN);
+        }
+
+        $query = 'SELECT id FROM ' . self::TABLE . ' WHERE token = :token AND status = :status';
+
+        $statement = $this->getMySQL()->getDb()->prepare($query);
+        $statement->bindValue(':token', $treatedToken);
+        $statement->bindValue(':status', GenericConstsUtil::YES);
+
+        $statement->execute();
+
+        if ($statement->rowCount() !== 1) {
+            header('HTTP/1.1 401 Unauthorized');
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_UNAUTHORIZED_TOKEN);
         }
     }
 

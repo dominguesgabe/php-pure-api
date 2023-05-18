@@ -27,12 +27,10 @@ class RequestValidator
     public function processRequest()
     {
         if (!in_array($this->request['method'], GenericConstsUtil::REQUEST_TYPE, true)) {
-            $response = utf8_encode(GenericConstsUtil::MSG_ERROR_TYPE_ROUTE);
+            return utf8_encode(GenericConstsUtil::MSG_ERROR_TYPE_ROUTE);
         }
 
-        $response = $this->directRequest();
-
-        return $response;
+        return $this->directRequest();
     }
 
     private function directRequest()
@@ -52,14 +50,22 @@ class RequestValidator
 
     private function get()
     {
-        $response = utf8_encode(GenericConstsUtil::MSG_ERROR_TYPE_ROUTE);
 
-        if (in_array($this->request['route'], GenericConstsUtil::TYPE_GET, true)) {
-            switch ($this->request['route']) {
-                case self::USERS:
-                    $userService = new UsersService($this->request);
-                    $response = $userService->validateGet();
-            }
+        if (!in_array($this->request['route'], GenericConstsUtil::TYPE_GET, true)) {
+            return utf8_encode(GenericConstsUtil::MSG_ERROR_TYPE_ROUTE);
         }
+
+        if ($this->request['route'] !== SELF::USERS) {
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_NON_EXISTENT_RESOURCE);
+        }
+
+        $userService = new UsersService($this->request);
+        return $userService->validateGet();
+    }
+
+    private function delete()
+    {
+        $userService = new UsersService($this->request);
+        return $userService->validateDelete();
     }
 }

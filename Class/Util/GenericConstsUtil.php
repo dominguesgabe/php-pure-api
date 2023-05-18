@@ -36,6 +36,6 @@ abstract class GenericConstsUtil
 
 //    OTHERS
     public const YES = 'Y';
-    public const TYPE = 'Type';
-    public const ANSWER = 'Answer';
+    public const TYPE = 'type';
+    public const DATA = 'data';
 }

@@ -20,4 +20,26 @@ class JsonUtil
             return $postJson;
         }
     }
+
+    public function proccessReturn($returned)
+    {
+        $data = [];
+        $data[GenericConstsUtil::TYPE] = GenericConstsUtil::TYPE_ERROR;
+
+        if ((is_array($returned) && count($returned) > 0) || strlen($returned) > 1) {//todo: improve
+            $data[GenericConstsUtil::TYPE] = GenericConstsUtil::TYPE_SUCCESS;
+            $data[GenericConstsUtil::DATA] = $returned;
+        }
+
+        $this->returnJson($data);
+    }
+
+    private function returnJson(array $json)
+    {
+        header('Content-Type: application/json');
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Access-Control-Allow-Methods: GET,POST,PUT,DELETE');
+
+        echo json_encode($json);
+    }
 }
