@@ -81,4 +81,10 @@ class RequestValidator
         $userService = new UsersService($this->request);
         return $userService->validatePost($this->requestData);
     }
+
+    private function put()
+    {
+        $userService = new UsersService($this->request);
+        return $userService->validatePut($this->requestData);
+    }
 }
