@@ -32,7 +32,7 @@ class AuthorizedTokensRepository
         $statement->execute();
 
         if ($statement->rowCount() !== 1) {
-            header('HTTP/1.1 401 Unauthorized');
+            http_response_code(GenericConstsUtil::UNAUTHORIZED);
             throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_UNAUTHORIZED_TOKEN);
         }
     }

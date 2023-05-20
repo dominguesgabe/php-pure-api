@@ -13,6 +13,8 @@ class RequestValidator
     private object $authorizedTokensRepository;
 
     const GET = "GET";
+    const POST = "POST";
+    const PUT = "PUT";
     const DELETE = "DELETE";
     const USERS = "USERS";
 
@@ -35,7 +37,12 @@ class RequestValidator
 
     private function directRequest()
     {
-        if ($this->request['method'] !== self::GET && $this->request['method'] !== self::DELETE) {
+        if (!$this->request['resource']) {
+            http_response_code(GenericConstsUtil::BAD_REQUEST);
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_BAD_REQUEST);
+        }
+
+        if ($this->request['method'] === self::POST || $this->request['method'] === self::PUT) {
             $jsonUtil = new JsonUtil();
             $this->requestData = $jsonUtil->treatJsonBody();
         }
@@ -67,5 +74,11 @@ class RequestValidator
     {
         $userService = new UsersService($this->request);
         return $userService->validateDelete();
+    }
+
+    private function post()
+    {
+        $userService = new UsersService($this->request);
+        return $userService->validatePost($this->requestData);
     }
 }

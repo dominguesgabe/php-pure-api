@@ -10,7 +10,7 @@ class JsonUtil
     public function treatJsonBody()
     {
         try {
-            $postJson = json_decode(file_get_contents('php://input'), true);
+            $postJson = json_decode(file_get_contents('php://input'), true, 512, JSON_THROW_ON_ERROR);
 
         } catch (JsonException $e) {
             throw new InvalidArgumentException(GenericConstsUtil::MSG_ERROR_EMPTY_JSON);

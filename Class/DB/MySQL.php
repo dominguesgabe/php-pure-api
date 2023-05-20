@@ -47,9 +47,23 @@ class MySQL
 
             $this->db->rollBack();
 
-            throw new InvalidArgumentException(GenericConstsUtil::MSG_ERROR_NO_RETURN);
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_NO_RETURN);
         }
         throw new InvalidArgumentException(GenericConstsUtil::MSG_ERROR_GENERIC);
+    }
+
+    public function post($table, $body) //TODO: prevent duplicates
+    {
+        $queryPost = 'INSERT into ' . $table . ' values (DEFAULT, :login, :password)';
+
+        $this->db->beginTransaction();
+
+        $stmt = $this->db->prepare($queryPost);
+        $stmt->bindParam(':login', $body['login']);
+        $stmt->bindParam(':password', $body['password']);
+        $stmt->execute();
+
+        return $stmt->rowCount();
     }
 
     public function getAll($table)

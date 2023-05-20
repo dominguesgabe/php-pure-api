@@ -2,6 +2,7 @@
 
 namespace Service;
 
+use http\Exception\InvalidArgumentException;
 use Kint\Kint;
 use Repository\UsersRepository;
 use Util\GenericConstsUtil;
@@ -10,6 +11,7 @@ class UsersService
 {
     const TABLE = 'users';
     const RESOURCES_GET = ['list'];
+    const RESOURCES_POST = ['create'];
     const RESOURCES_DELETE = ['delete'];
     private array $data;
     private object $UsersRepository;
@@ -47,6 +49,29 @@ class UsersService
         }
 
         return $this->UsersRepository->getMySQL()->delete(SELF::TABLE, $this->data['id']);
+    }
+
+    public function validatePost(array $requestBody)
+    {
+        if (!in_array($this->data['resource'], SELF::RESOURCES_POST, true)) {
+            return utf8_encode(GenericConstsUtil::MSG_ERROR_TYPE_ROUTE);
+        }
+
+        if (!$requestBody['login'] || !$requestBody['password']) {
+            http_response_code(GenericConstsUtil::BAD_REQUEST);
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_BAD_REQUEST);
+        }
+
+        if (!$this->UsersRepository->getMySQL()->post(SELF::TABLE, $requestBody)) {
+            $this->UsersRepository->getMySQL()->getDb()->rollBack();
+            throw new \InvalidArgumentException(GenericConstsUtil::MSG_ERROR_NOT_AFFECTED);
+        }
+
+        $lastId = $this->UsersRepository->getMySQL()->getDb()->lastInsertId();
+        $this->UsersRepository->getMySQL()->getDb()->commit();
+
+        http_response_code(GenericConstsUtil::NO_CONTENT);
+        return ['id' => $lastId];
     }
 
     private function getUserById()

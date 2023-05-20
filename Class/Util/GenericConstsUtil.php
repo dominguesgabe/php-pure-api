@@ -13,6 +13,7 @@ abstract class GenericConstsUtil
 
 //    ERRORS
     public const MSG_ERROR_TYPE_ROUTE = 'Not allowed route.';
+    public const MSG_ERROR_BAD_REQUEST = 'Bad request.';
     public const MSG_ERROR_NON_EXISTENT_RESOURCE = 'Non-existent resource.';
     public const MSG_ERROR_GENERIC = 'An error occurred with the request.';
     public const MSG_ERROR_NO_RETURN = 'No record found.';
@@ -20,9 +21,11 @@ abstract class GenericConstsUtil
     public const MSG_ERROR_EMPTY_TOKEN = 'Authentication token required.';
     public const MSG_ERROR_EMPTY_JSON = 'Requisition body can not be empty.';
     public const MSG_ERROR_UNAUTHORIZED_TOKEN = 'Unauthorized token.';
+    public const MSG_ERROR_DUPLICATED_ENTRY = 'Duplicated entry.';
 
 //    SUCCESS
     public const MSG_SUCCESS_DELETED = 'Successfully deleted.';
+    public const MSG_SUCCESS_CREATED = 'Successfully created user.';
     public const MSG_SUCCESS_UPDATED = 'Successfully updated.';
 
 //    RESOURCE USERS
@@ -38,4 +41,9 @@ abstract class GenericConstsUtil
     public const YES = 'Y';
     public const TYPE = 'type';
     public const DATA = 'data';
+
+//  STATUS
+    public const NO_CONTENT = 201;
+    public const BAD_REQUEST = 400;
+    public const UNAUTHORIZED = 401;
 }
